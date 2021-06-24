@@ -7,10 +7,10 @@ Here are the requirements:
 
 ## Here are the javascript templates in this repo that you can use!
 
-1. [Nose Brush using PoseNet](./script_nosebrush.js)
-2. [Body Lens using PoseNet](./script_posenet.js)
-3. [Face Lens using Face API](./script_faceapi.js)
-4. [Face Lens using Face Mesh](./script_facemesh.js)
+1. [Nose Brush using ml5 PoseNet](./script_nosebrush.js)
+2. [Body Lens using ml5 PoseNet](./script_posenet.js)
+3. [Face Lens using ml5 Face API](./script_faceapi.js)
+4. [Face Lens using ml5 Face Mesh](./script_facemesh.js)
 
 
 ## Get started
