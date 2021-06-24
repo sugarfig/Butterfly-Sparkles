@@ -9,7 +9,6 @@ PoseNet example using p5.js
 === */
 
 let video;
-let flippedVideo;
 
 let poseNet;
 let poses = [];
@@ -29,29 +28,31 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(1.33*displayHeight, displayHeight);
+  createCanvas(windowWidth, windowWidth/1.33);
   video = createCapture(VIDEO);
-  video.size(1.33*displayHeight, displayHeight);
-  flippedVideo
+  video.size(width, height);
 
   // Create a new poseNet method with a single detection
-  poseNet = ml5.poseNet(video);
+  poseNet = ml5.poseNet(video, {flipHorizontal: true});
   // This sets up an event that fills the global variable "poses"
   // with an array every time new poses are detected
   poseNet.on('pose', function(results) {
     poses = results;
   });
+
   // Hide the video element, and just show the canvas
   video.hide();
 }
 
 function draw() {
-  image(video, 0, 0, 1.33*displayHeight, displayHeight);
+  let flippedVideo = ml5.flipImage(video);
+  image(flippedVideo, 0, 0);
   
   // if a pose exists
   if (poses.length > 0) {
     	// pull out the first pose
       let pose = poses[0]; 
+      
      // pull out the pose information
     	let poseInformation = pose.pose; 
     // pull out the keypoints of the pose
@@ -64,8 +65,11 @@ function draw() {
     	let nosePosition = noseKeypoint.position; 
 
       //store the position in a set
-      nosePositions.add(nosePosition);
-    
+      if (toggle){
+        nosePositions.add(nosePosition);
+      }
+
+
     // if it's likely to exist, interpolate for a smooth position
     	if( noseKeypoint.score > .2) {        
         newNosePositionX  = lerp(lastNoseX, nosePosition.x, .3); 
@@ -81,9 +85,7 @@ function draw() {
       noStroke();
 
       nosePositions.forEach(function(pos) {
-        if (toggle){
           image(img, pos.x, pos.y, 90, 50); 
-        } 
       });
   }
 }

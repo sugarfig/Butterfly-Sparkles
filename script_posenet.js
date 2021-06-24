@@ -11,6 +11,7 @@ PoseNet example using p5.js
 let video;
 let poseNet;
 let poses = [];
+let wristRaised = false;
 
 // Storing the last keypoint position
 let lastKeypoints = [];
@@ -21,7 +22,7 @@ function setup() {
   video.size(width, height);
 
   // Create a new poseNet method with a single detection
-  poseNet = ml5.poseNet(video);
+  poseNet = ml5.poseNet(video, {flipHorizontal: true});
   // This sets up an event that fills the global variable "poses"
   // with an array every time new poses are detected
   poseNet.on('pose', function(results) {
@@ -57,6 +58,14 @@ function updateKeypoints() {
 	
 	let pose = poses[0].pose;
 	let keypoints = pose.keypoints; 
+
+  let leftWristPosition = poses[0].pose.keypoints[9].position; 
+  if (leftWristPosition.y < windowHeight/2) {
+    wristRaised = true;
+  } else {
+    wristRaised = false;
+  }
+
 	
 	for (let kp=0; kp<keypoints.length; kp++) {
     
@@ -74,11 +83,18 @@ function updateKeypoints() {
 }
 
 function draw() {
-  image(video, 0, 0, width, height);
+  let flippedVideo = ml5.flipImage(video);
+  image(flippedVideo, 0, 0, width, height);
 
 	updateKeypoints(); 
   
   drawKeypoints();
+
+  if (wristRaised) {
+      tint(0, 153, 204); // Tint blue
+  } else {
+    tint(255); //No tint 
+  }
 }
 
 // A function to draw ellipses over the detected keypoints
