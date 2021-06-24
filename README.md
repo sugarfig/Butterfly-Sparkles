@@ -2,7 +2,7 @@
 
 Here are the requirements: 
 
-1. VARIABLES: Activate at least one change in p5.js (display an image,run an animation,change the screen in some way, etc.) based on a poseNet keypoint position.
+1. VARIABLES: Activate at least one change in p5.js (display an image,run an animation,change the screen in some way, etc.) based on a poseNet keypoint position (this is an object with a x and y property).
 2. EVENTS: Activate at least one change in p5.js based on an event (if you raise your hand, or if you make a certain gesture). 
 
 ## Here are the templates in this repo that you can use!
