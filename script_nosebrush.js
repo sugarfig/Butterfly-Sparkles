@@ -11,33 +11,28 @@ PoseNet example using p5.js
 let video;
 
 let poseNet;
-let poses = [];
+let poseNetResults = [];
 
-let lastNoseX = 0; 
-let lastNoseY = 0; 
-
-let newNosePositionX = 0;
-let newNosePositionY = 0;
-let img; 
+let img;
 
 let nosePositions = new Set();
-let toggle = true;
+let brushOn = true;
 
-function preload(){
-  img = loadImage('assets/sealogo.png');
+function preload() {
+  img = loadImage("assets/sealogo.png");
 }
 
 function setup() {
-  createCanvas(windowWidth, windowWidth/1.33);
+  createCanvas(640, 480);
   video = createCapture(VIDEO);
   video.size(width, height);
 
   // Create a new poseNet method with a single detection
-  poseNet = ml5.poseNet(video, {flipHorizontal: true});
+  poseNet = ml5.poseNet(video, { flipHorizontal: true });
   // This sets up an event that fills the global variable "poses"
   // with an array every time new poses are detected
-  poseNet.on('pose', function(results) {
-    poses = results;
+  poseNet.on("pose", function (results) {
+    poseNetResults = results;
   });
 
   // Hide the video element, and just show the canvas
@@ -47,53 +42,42 @@ function setup() {
 function draw() {
   let flippedVideo = ml5.flipImage(video);
   image(flippedVideo, 0, 0);
-  
+
   // if a pose exists
-  if (poses.length > 0) {
-    	// pull out the first pose
-      let pose = poses[0]; 
-      
-     // pull out the pose information
-    	let poseInformation = pose.pose; 
+  if (poseNetResults.length > 0) {
+    // pull out the first pose
+    let pose = poseNetResults[0].pose;
+
     // pull out the keypoints of the pose
-  		let keypoints = poseInformation.keypoints; 
-    
-    	//pull out just the first keypoint (the nose) 
-    	let noseKeypoint = keypoints[0]; 
-    
-    	// get the position of that point
-    	let nosePosition = noseKeypoint.position; 
+    let keypoints = pose.keypoints;
 
-      //store the position in a set
-      if (toggle){
-        nosePositions.add(nosePosition);
-      }
+    //pull out just the first keypoint (the nose)
+    let noseKeypoint = keypoints[0];
 
+    // get the position of that point
+    let nosePosition = noseKeypoint.position;
 
-    // if it's likely to exist, interpolate for a smooth position
-    	if( noseKeypoint.score > .2) {        
-        newNosePositionX  = lerp(lastNoseX, nosePosition.x, .3); 
-        newNosePositionY  = lerp(lastNoseY, nosePosition.y, .3); 
-	
-  
-        lastNoseX = newNosePositionX; 
-        lastNoseY = newNosePositionY; 
-      }
-  
-    	// Draw it
-      fill('#F6F500'); 
-      noStroke();
+    //store the position in a set
+    if (brushOn) {
+      nosePositions.add(nosePosition);
+    }
 
-      nosePositions.forEach(function(pos) {
-          image(img, pos.x, pos.y, 90, 50); 
-      });
+    // Draw it
+    fill("#F6F500"); // snap yellow
+    noStroke();
+
+    nosePositions.forEach(function (pos) {
+      image(img, pos.x - 25, pos.y - 9.5, 50, 19);
+    });
   }
 }
 
-function keyPressed(){
-  if (keyCode === ENTER){
+function keyPressed() {
+  if (keyCode === ENTER) {
+    // clear the screen
     nosePositions = new Set();
-  } else if (keyCode === UP_ARROW){
-    toggle = !toggle;
+  } else if (keyCode === UP_ARROW) {
+    // pause the brush drawing
+    brushOn = !brushOn;
   }
 }
