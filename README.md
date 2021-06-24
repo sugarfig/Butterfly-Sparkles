@@ -18,6 +18,7 @@ Here are the requirements:
 1. Select one javascript template above. 
 2. Change line 15 of the [index.html](index.html) file to the name of your template!
 4. Run your code locally using `http-server` or the `VSCode Go Live` option.
+5. Sometimes you may need to hard-refresh for your changes to load. In those cases, use COMMAND + SHIFT + R.
 
 ## Here are templates and resources you can find elsewhere.
 1. [Here are all of ml5 templates for p5!](https://editor.p5js.org/ml5/sketches)
