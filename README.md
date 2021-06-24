@@ -13,5 +13,5 @@ Here are the requirements:
 4. ![Face Lens using Face Mesh](./script_facemesh.js)
 
 ## Here are templates and resources you can find elsewhere.
-1. ![Here are all of ml5 templates for p5!](https://editor.p5js.org/ml5/sketches)
-2. ![Here are some more templates from a Interactive and Computation class](http://cmuems.com/2018/60212f/deliverables/5-due-10-12/templates/)
+1. [Here are all of ml5 templates for p5!](https://editor.p5js.org/ml5/sketches)
+2. [Here are some more templates from a Interactive and Computation class](http://cmuems.com/2018/60212f/deliverables/5-due-10-12/templates/)
