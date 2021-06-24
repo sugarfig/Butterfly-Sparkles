@@ -12,7 +12,7 @@ This example uses p5 preload function to create the classifier
 // Classifier Variable
 let classifier;
 // Model URL
-let imageModelURL = 'https://teachablemachine.withgoogle.com/models/8e_h03eVg/';
+let imageModelURL = 'https://teachablemachine.withgoogle.com/models/KB9LpyM2z/';
 
 
 // Video
@@ -32,7 +32,7 @@ function setup() {
   // Create the video
   video = createCapture(VIDEO);
   video.size(160, 120);
-  // video.hide();
+  video.hide();
 
   flippedVideo = ml5.flipImage(video)
   // Start classifying
@@ -43,9 +43,9 @@ function setup() {
 }
 
 function draw() {
-  background(0, 255, 0);
+  // background(0, 255, 0);
   // Draw the video
-  // image(flippedVideo, 0, 0);
+  image(flippedVideo, 0, 0, width, height);
 
   if (label === 'Thumbs') {
     tint(0, 153, 204); // Tint blue
