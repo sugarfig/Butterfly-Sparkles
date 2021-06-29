@@ -1,9 +1,9 @@
 let video;
 let latestPrediction = null;
 let modelIsLoading = true;
-let crownImage;
+let butterflyImage;
 
-const FOREHEAD_POINT = 151;
+const NOSE_POINT = 1;
 const LEFT_FOREHEAD = 104;
 const RIGHT_FOREHEAD = 333;
 
@@ -11,7 +11,7 @@ const RIGHT_FOREHEAD = 333;
 //p5 function
 function preload()
 {
-    crownImage = loadImage("assets/crown.png");
+    butterflyImage = loadImage("assets/butterfly.gif");
 }
 
 //p5 function
@@ -49,14 +49,20 @@ function draw()
     //show a loading screen
 
     //draw webcam video
-    imageMode(CORNER);
     image(video, 0, 0, width, height);
     //------------------------------------
     if(latestPrediction == null) return;//don't draw anything else
 
     //get forehead location
-    let foreheadLocation = latestPrediction.scaledMesh[FOREHEAD_POINT];
+    let noseLocation = latestPrediction.scaledMesh[NOSE_POINT];
     console.log(foreheadLocation);
+
+    image
+    (butterflyImage,
+    noseLocation[0] - 50, 
+    noseLocation[1] - 50, 
+    100, 
+    100);
     
     let leftForeheadLocation = latestPrediction.scaledMesh[LEFT_FOREHEAD];
     let rightForeheadLocation = latestPrediction.scaledMesh[RIGHT_FOREHEAD];
@@ -65,23 +71,4 @@ function draw()
     //     leftForeheadLocation[1], 
     //     rightForeheadLocation[0], 
     //     rightForeheadLocation[1]);
-
-    let foreheadWidth = dist(leftForeheadLocation[0], 
-        leftForeheadLocation[1], 
-        rightForeheadLocation[0], 
-        rightForeheadLocation[1]);
-
-    console.log(foreheadWidth);
-
-    let crownWidth = foreheadWidth * 3;
-    let crownHeight = (crownImage.height / crownImage.width) * crownWidth;
-    
-    imageMode(CENTER);
-    image
-    (crownImage,
-    foreheadLocation[0], 
-    foreheadLocation[1] - crownHeight / 2, 
-    crownWidth, 
-    crownHeight);
-    
 }
