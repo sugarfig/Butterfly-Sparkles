@@ -3,7 +3,7 @@ let latestPrediction = null;
 let modelIsLoading = true;
 let butterflyImage;
 
-const NOSE_POINT = 1;
+const FOREHEAD_POINT = 195;
 const LEFT_FOREHEAD = 104;
 const RIGHT_FOREHEAD = 333;
 
@@ -54,13 +54,13 @@ function draw()
     if(latestPrediction == null) return;//don't draw anything else
 
     //get forehead location
-    let noseLocation = latestPrediction.scaledMesh[NOSE_POINT];
+    let foreheadLocation = latestPrediction.scaledMesh[FOREHEAD_POINT];
     console.log(foreheadLocation);
 
     image
     (butterflyImage,
-    noseLocation[0] - 50, 
-    noseLocation[1] - 50, 
+    foreheadLocation[0] - 50, 
+    foreheadLocation[1] - 50, 
     100, 
     100);
     
