@@ -3,9 +3,9 @@ let latestPrediction = null;
 let modelIsLoading = true;
 let butterflyImage;
 
-const FOREHEAD_POINT = 195;
-const LEFT_FOREHEAD = 104;
-const RIGHT_FOREHEAD = 333;
+const NOSE_POINT = 195;
+const LEFT_NOSE = 236; //104 //142
+const RIGHT_NOSE = 456; //333 //371
 
 
 //p5 function
@@ -49,26 +49,45 @@ function draw()
     //show a loading screen
 
     //draw webcam video
+    imageMode(CORNER);
     image(video, 0, 0, width, height);
     //------------------------------------
     if(latestPrediction == null) return;//don't draw anything else
 
-    //get forehead location
-    let foreheadLocation = latestPrediction.scaledMesh[FOREHEAD_POINT];
-    console.log(foreheadLocation);
+    //get nose location
+    let noseLocation = latestPrediction.scaledMesh[NOSE_POINT];
+    console.log(noseLocation);
 
+    let leftNoseLocation = latestPrediction.scaledMesh[LEFT_NOSE];
+    let rightNoseLocation = latestPrediction.scaledMesh[RIGHT_NOSE];
+
+    let noseWidth = dist(leftNoseLocation[0], 
+        leftNoseLocation[1], 
+        rightNoseLocation[0], 
+        rightNoseLocation[1]);
+    
+    let butterflyWidth = noseWidth * 3;
+    let butterflyHeight = (butterflyImage.height / butterflyImage.width) * butterflyWidth;
+    
+    imageMode(CENTER);
     image
     (butterflyImage,
-    foreheadLocation[0] - 50, 
-    foreheadLocation[1] - 50, 
-    100, 
-    100);
-    
-    let leftForeheadLocation = latestPrediction.scaledMesh[LEFT_FOREHEAD];
-    let rightForeheadLocation = latestPrediction.scaledMesh[RIGHT_FOREHEAD];
+    noseLocation[0], 
+    noseLocation[1], 
+    butterflyWidth, 
+    butterflyHeight);
 
-    // line(leftForeheadLocation[0], 
-    //     leftForeheadLocation[1], 
-    //     rightForeheadLocation[0], 
-    //     rightForeheadLocation[1]);
+    // image
+    // (butterflyImage,
+    // noseLocation[0] - 50, 
+    // noseLocation[1] - 50, 
+    // 100, 
+    // 100);
+    
+
+
+    // line(leftNoseLocation[0], 
+    //     leftNoseLocation[1], 
+    //     rightNoseLocation[0], 
+    //     rightNoseLocation[1]);
 }
