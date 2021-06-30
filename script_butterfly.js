@@ -4,6 +4,7 @@ let modelIsLoading = true;
 let butterflyImage;
 
 const NOSE_POINT = 195;
+const LEFT_EYE = 159; //159
 const LEFT_NOSE = 236; //104 //142
 const RIGHT_NOSE = 456; //333 //371
 
@@ -56,6 +57,8 @@ function draw()
 
     //get nose location
     let noseLocation = latestPrediction.scaledMesh[NOSE_POINT];
+    let leftEyeLocation = latestPrediction.scaledMesh[LEFT_EYE];
+    
     console.log(noseLocation);
 
     let leftNoseLocation = latestPrediction.scaledMesh[LEFT_NOSE];
@@ -76,6 +79,13 @@ function draw()
     noseLocation[1], 
     butterflyWidth, 
     butterflyHeight);
+
+    fill('pink');
+    stroke('pink');
+    ellipse(leftEyeLocation[0] + 10, 
+        leftEyeLocation[1] + 10, 
+        10, 
+        10);
 
     // image
     // (butterflyImage,
