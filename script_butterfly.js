@@ -3,10 +3,22 @@ let latestPrediction = null;
 let modelIsLoading = true;
 let butterflyImage;
 
+//main points
 const NOSE_POINT = 195;
-const LEFT_EYE = 159; //159
+const LEFT_EYE = 118; //159
+
+//nose
 const LEFT_NOSE = 236; //104 //142
 const RIGHT_NOSE = 456; //333 //371
+
+//blush
+// const CHEEKS 
+
+//left eye
+const LEFT_EYE_LEFTSIDE = 33;
+const LEFT_EYE_RIGHTSIDE = 133;
+const LEFT_EYE_TOP = 159;
+const LEFT_EYE_BOTTOM = 143;
 
 
 //p5 function
@@ -68,9 +80,28 @@ function draw()
         leftNoseLocation[1], 
         rightNoseLocation[0], 
         rightNoseLocation[1]);
-    
+
+    let leftEyeLeftLocation = latestPrediction.scaledMesh[LEFT_EYE_LEFTSIDE];
+    let leftEyeRightLocation = latestPrediction.scaledMesh[LEFT_EYE_RIGHTSIDE];
+
+    let leftEyeWidth = dist(leftEyeLeftLocation[0], 
+        leftEyeLeftLocation[1], 
+        leftEyeRightLocation[0], 
+        leftEyeRightLocation[1]);
+
+    let leftEyeTopLocation = latestPrediction.scaledMesh[LEFT_EYE_TOP];
+    let leftEyeBottomLocation = latestPrediction.scaledMesh[LEFT_EYE_BOTTOM];
+
+    let leftEyeHeight = dist(leftEyeTopLocation[0], 
+        leftEyeTopLocation[1],
+        leftEyeBottomLocation[0],
+        leftEyeBottomLocation[1]);
+
     let butterflyWidth = noseWidth * 3;
     let butterflyHeight = (butterflyImage.height / butterflyImage.width) * butterflyWidth;
+
+    let pupilWidth = leftEyeWidth;
+    let pupilHeight = leftEyeHeight / 2;
     
     imageMode(CENTER);
     image
@@ -80,12 +111,12 @@ function draw()
     butterflyWidth, 
     butterflyHeight);
 
-    fill('pink');
-    stroke('pink');
+    fill('rgba(100%,20%,70%,0.5)');
+    stroke('rgba(100%,20%,70%,0.5)');
     ellipse(leftEyeLocation[0] + 10, 
         leftEyeLocation[1] + 10, 
-        10, 
-        10);
+        pupilWidth, 
+        pupilHeight);
 
     // image
     // (butterflyImage,
