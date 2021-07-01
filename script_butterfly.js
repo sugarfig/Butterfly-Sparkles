@@ -6,10 +6,13 @@ let noseWidth;
 let noseLocation;
 let eyebrowHeight;
 let blushImage;
+let eyelashImage;
+// let leftEyeLocation;
 
 //main points
 const NOSE_POINT = 195;
-const LEFT_EYE = 118; //159
+const LEFT_EYE = 159; //118
+const RIGHT_EYE = 386;
 
 //nose
 const LEFT_NOSE = 236; //104 //142
@@ -24,8 +27,13 @@ const LEFT_CHEEK = 147;
 const RIGHT_CHEEK = 176;
 
 //left eye
-// const LEFT_EYE_LEFTSIDE = 33;
-// const LEFT_EYE_RIGHTSIDE = 133;
+const LEFT_EYE_LEFTSIDE = 33;
+const LEFT_EYE_RIGHTSIDE = 133;
+
+//right eye
+const RIGHT_EYE_LEFTSIDE = 362;
+const RIGHT_EYE_RIGHTSIDE = 263;
+
 // const LEFT_EYE_TOP = 159;
 // const LEFT_EYE_BOTTOM = 143;
 
@@ -35,6 +43,7 @@ function preload()
 {
     butterflyImage = loadImage("assets/butterfly.gif");
     blushImage = loadImage("assets/Blush.webp");
+    eyelashImage = loadImage("assets/eyeliner1.png");
 }
 
 //p5 function
@@ -62,7 +71,8 @@ function setup()
         // console.log(results[0]);
         latestPrediction = results[0];
         //get nose location
-        noseLocation = latestPrediction.scaledMesh[NOSE_POINT];
+        // noseLocation = latestPrediction.scaledMesh[NOSE_POINT];//line causes problems
+        // leftEyeLocation = latestPrediction.scaledMesh[LEFT_EYE];
     });
 
     bug = new Butterfly();
@@ -84,10 +94,16 @@ function draw()
 
     //get nose location
     noseLocation = latestPrediction.scaledMesh[NOSE_POINT];
-    // let leftEyeLocation = latestPrediction.scaledMesh[LEFT_EYE];
+
+    //get left eye location
+    let leftEyeLocation = latestPrediction.scaledMesh[LEFT_EYE];
+
+    //get right eye location
+    let rightEyeLocation = latestPrediction.scaledMesh[RIGHT_EYE];
     
     console.log(noseLocation);
 
+    //get nose width
     let leftNoseLocation = latestPrediction.scaledMesh[LEFT_NOSE];
     let rightNoseLocation = latestPrediction.scaledMesh[RIGHT_NOSE];
 
@@ -96,6 +112,7 @@ function draw()
         rightNoseLocation[0], 
         rightNoseLocation[1]);
 
+    //get eyebrow height
     let topEyebrowLocation = latestPrediction.scaledMesh[LEFT_EYEBROW_TOP];
     let bottomEyebrowLocation = latestPrediction.scaledMesh[LEFT_EYEBROW_BOTTOM];
 
@@ -103,7 +120,8 @@ function draw()
         topEyebrowLocation[1], 
         bottomEyebrowLocation[0],
         bottomEyebrowLocation[1]);
-
+    
+    //get cheeks width
     let leftCheekLocation = latestPrediction.scaledMesh[LEFT_CHEEK];
     let rightCheekLocation = latestPrediction.scaledMesh[RIGHT_CHEEK];
 
@@ -112,15 +130,14 @@ function draw()
         rightCheekLocation[0],
         rightCheekLocation[1]);
     
+    //gets left eye width
+    let leftEyeLeftLocation = latestPrediction.scaledMesh[LEFT_EYE_LEFTSIDE];
+    let leftEyeRightLocation = latestPrediction.scaledMesh[LEFT_EYE_RIGHTSIDE];
 
-
-    // let leftEyeLeftLocation = latestPrediction.scaledMesh[LEFT_EYE_LEFTSIDE];
-    // let leftEyeRightLocation = latestPrediction.scaledMesh[LEFT_EYE_RIGHTSIDE];
-
-    // let leftEyeWidth = dist(leftEyeLeftLocation[0], 
-    //     leftEyeLeftLocation[1], 
-    //     leftEyeRightLocation[0], 
-    //     leftEyeRightLocation[1]);
+    let leftEyeWidth = dist(leftEyeLeftLocation[0], 
+        leftEyeLeftLocation[1], 
+        leftEyeRightLocation[0], 
+        leftEyeRightLocation[1]);
 
     // let leftEyeTopLocation = latestPrediction.scaledMesh[LEFT_EYE_TOP];
     // let leftEyeBottomLocation = latestPrediction.scaledMesh[LEFT_EYE_BOTTOM];
@@ -132,7 +149,17 @@ function draw()
 
     // let pupilWidth = leftEyeWidth;
     // let pupilHeight = leftEyeHeight / 2;
+    
+    let lashWidth = leftEyeWidth * 2;
+    let lashHeight = (eyelashImage.height / eyelashImage.width) * lashWidth;
 
+    imageMode(CENTER);
+    image
+    (eyelashImage,
+    leftEyeLocation[0], 
+    leftEyeLocation[1], 
+    lashWidth, 
+    lashHeight);
 
 
     if(eyebrowHeight > 10) //eyebrow raise
