@@ -86,6 +86,30 @@ function getLatestPrediction(point)
     return latestPrediction.scaledMesh[point];
 }
 
+function getDistance(firstPoint, secondPoint)
+{
+    let leftLocation = getLatestPrediction(firstPoint);
+    let rightLocation = getLatestPrediction(secondPoint);
+
+    return dist(leftLocation[0], leftLocation[1], rightLocation[0], rightLocation[1]);
+}
+
+function displayImage(theImage, mainLocation, imageWidth, imageHeight)
+{
+    imageMode(CENTER);
+    image
+    (theImage,
+    mainLocation[0], 
+    mainLocation[1], 
+    imageWidth, 
+    imageHeight);
+}
+
+function getImageHeight(theImage, width)
+{
+    return (theImage.height / theImage.width) * width;
+}
+
 //p5 function
 function draw()
 {
@@ -94,25 +118,6 @@ function draw()
     image(video, 0, 0, width, height);
     //------------------------------------
     if(latestPrediction == null) return;//don't draw anything else
-
-    // //get nose location
-    // noseLocation = latestPrediction.scaledMesh[NOSE_POINT];
-
-    // //get left eye location
-    // let leftEyeLocation = latestPrediction.scaledMesh[LEFT_EYE];
-
-    // //get right eye location
-    // let rightEyeLocation = latestPrediction.scaledMesh[RIGHT_EYE];
-
-    // //get left cheekbone location
-    // let leftCheekboneLocation = latestPrediction.scaledMesh[LEFT_CHEEKBONE];
-
-    // //get right cheekbone location
-    // let rightCheekboneLocation = latestPrediction.scaledMesh[RIGHT_CHEEKBONE];
-
-    // //get nose width
-    // let leftNoseLocation = latestPrediction.scaledMesh[LEFT_NOSE];
-    // let rightNoseLocation = latestPrediction.scaledMesh[RIGHT_NOSE];
 
     //get nose location
     noseLocation = getLatestPrediction(NOSE_POINT);
@@ -130,91 +135,37 @@ function draw()
     let rightCheekboneLocation = getLatestPrediction(RIGHT_CHEEKBONE);
 
     //get nose width
-    let leftNoseLocation = getLatestPrediction(LEFT_NOSE);
-    let rightNoseLocation = getLatestPrediction(RIGHT_NOSE);
-
-    noseWidth = dist(leftNoseLocation[0], 
-        leftNoseLocation[1], 
-        rightNoseLocation[0], 
-        rightNoseLocation[1]);
+    noseWidth = getDistance(LEFT_NOSE, RIGHT_NOSE);
 
     //get eyebrow height
-    let topEyebrowLocation = getLatestPrediction(LEFT_EYEBROW_TOP);
-    let bottomEyebrowLocation = getLatestPrediction(LEFT_EYEBROW_BOTTOM);
-
-    eyebrowHeight = dist(topEyebrowLocation[0], 
-        topEyebrowLocation[1], 
-        bottomEyebrowLocation[0],
-        bottomEyebrowLocation[1]);
+    eyebrowHeight = getDistance(LEFT_EYEBROW_TOP, LEFT_EYEBROW_BOTTOM);
     
     //get cheeks width
-    let leftCheekLocation = getLatestPrediction(LEFT_CHEEK);
-    let rightCheekLocation = getLatestPrediction(RIGHT_CHEEK);
-
-    let cheekWidth = dist(leftCheekLocation[0],
-        leftCheekLocation[1],
-        rightCheekLocation[0],
-        rightCheekLocation[1]);
+    let cheekWidth = getDistance(LEFT_CHEEK, RIGHT_CHEEK);
     
     //gets left eye width
-    let leftEyeLeftLocation = getLatestPrediction(LEFT_EYE_LEFTSIDE);
-    let leftEyeRightLocation = getLatestPrediction(LEFT_EYE_RIGHTSIDE);
-
-    let leftEyeWidth = dist(leftEyeLeftLocation[0], 
-        leftEyeLeftLocation[1], 
-        leftEyeRightLocation[0], 
-        leftEyeRightLocation[1]);
+    let leftEyeWidth = getDistance(LEFT_EYE_LEFTSIDE, LEFT_EYE_RIGHTSIDE);
 
     //gets right eye width
-    let rightEyeLeftLocation = getLatestPrediction(RIGHT_EYE_LEFTSIDE);
-    let rightEyeRightLocation = getLatestPrediction(RIGHT_EYE_RIGHTSIDE);
-
-    let rightEyeWidth = dist(rightEyeLeftLocation[0],
-        rightEyeLeftLocation[1],
-        rightEyeRightLocation[0],
-        rightEyeRightLocation[1]);
+    let rightEyeWidth = getDistance(RIGHT_EYE_LEFTSIDE, RIGHT_EYE_RIGHTSIDE);
     
     //gets left cheekbone width
-    let leftCheekboneLeftLocation = getLatestPrediction(LEFT_CHEEKBONE_LEFTSIDE);
-    let leftCheekboneRightLocation = getLatestPrediction(LEFT_CHEEKBONE_RIGHTSIDE);
-
-    let leftCheekboneWidth = dist(leftCheekboneLeftLocation[0],
-        leftCheekboneLeftLocation[1],
-        leftCheekboneRightLocation[0],
-        leftCheekboneRightLocation[1]);
+    let leftCheekboneWidth = getDistance(LEFT_CHEEKBONE_LEFTSIDE, LEFT_CHEEKBONE_RIGHTSIDE);
 
     //gets right cheekbone width
-    let rightCheekboneLeftLocation = getLatestPrediction(RIGHT_CHEEKBONE_LEFTSIDE);
-    let rightCheekboneRightLocation = getLatestPrediction(RIGHT_CHEEKBONE_RIGHTSIDE);
-
-    let rightCheekboneWidth = dist(rightCheekboneLeftLocation[0],
-        rightCheekboneLeftLocation[1],
-        rightCheekboneRightLocation[0],
-        rightCheekboneRightLocation[1]);
+    let rightCheekboneWidth = getDistance(RIGHT_CHEEKBONE_LEFTSIDE, RIGHT_CHEEKBONE_RIGHTSIDE);
     
     //left eyelash
     let lLashWidth = leftEyeWidth * 2;
     let lLashHeight = (eyelashImage.height / eyelashImage.width) * lLashWidth;
 
-    imageMode(CENTER);
-    image
-    (eyelashImage,
-    leftEyeLocation[0], 
-    leftEyeLocation[1], 
-    lLashWidth, 
-    lLashHeight);
+    displayImage(eyelashImage, leftEyeLocation, lLashWidth, lLashHeight);
     
     //right eyelash
     let rLashWidth = rightEyeWidth * 2;
     let rLashHeight = (eyelashImage.height / eyelashImage.width) * rLashWidth;
     
-    imageMode(CENTER);
-    image
-    (eyelashImage,
-    rightEyeLocation[0], 
-    rightEyeLocation[1], 
-    rLashWidth, 
-    rLashHeight);
+    displayImage(eyelashImage, rightEyeLocation, rLashWidth, rLashHeight);
 
     //butterfly
     if(eyebrowHeight > 10) //eyebrow raise
@@ -229,37 +180,17 @@ function draw()
     //blush
     let blushWidth = cheekWidth * 2;
     let blushHeight = (blushImage.height / blushImage.width) * blushWidth;
-    imageMode(CENTER);
-    image
-    (blushImage,
-    noseLocation[0], 
-    noseLocation[1], 
-    blushWidth, 
-    blushHeight);
+    displayImage(blushImage, noseLocation, blushWidth, blushHeight);
 
     //left cheek glitter
     let lGlitterWidth = leftCheekboneWidth;
     let lGlitterHeight = (pGlitterImage.height / pGlitterImage.width) * lGlitterWidth;
-
-    imageMode(CENTER);
-    image
-    (pGlitterImage,
-    leftCheekboneLocation[0], 
-    leftCheekboneLocation[1], 
-    lGlitterWidth, 
-    lGlitterHeight);
+    displayImage(pGlitterImage, leftCheekboneLocation, lGlitterWidth, lGlitterHeight);
 
     //right cheek glitter
     let rGlitterWidth = rightCheekboneWidth;
     let rGlitterHeight = (pGlitterImage.height / pGlitterImage.width) * rGlitterWidth;
-
-    imageMode(CENTER);
-    image
-    (pGlitterImage,
-    rightCheekboneLocation[0], 
-    rightCheekboneLocation[1], 
-    rGlitterWidth, 
-    rGlitterHeight);
+    displayImage(pGlitterImage, rightCheekboneLocation, rGlitterWidth, rGlitterHeight);
 
     //butterfly
     bug.display();
