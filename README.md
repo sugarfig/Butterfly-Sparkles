@@ -1,16 +1,9 @@
-# Assignment 2: Make a reverse-engineered Snap Lens
+# Project Title:
+Butterfly Sparkles
 
-Here are the requirements: 
 
-1. VARIABLES: Based on a poseNet keypoint position (this is an object with a x and y property) in ml5, activate at least one change in p5.js (display an image,run an animation,change the screen in some way, etc.).
-2. EVENTS: Write some logic so that when an event happens (if you raise your hand, or if you make a certain gesture, etc.), activate at least one change in p5.js.
+## Description:
 
-## Here are the javascript templates in this repo that you can use!
-
-1. [Nose Brush using ml5 PoseNet](./script_nosebrush.js)
-2. [Body Lens using ml5 PoseNet](./script_posenet.js)
-3. [Face Lens using ml5 Face API](./script_faceapi.js)
-4. [Face Lens using ml5 Face Mesh](./script_facemesh.js)
 
 
 ## Get started
