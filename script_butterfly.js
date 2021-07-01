@@ -15,6 +15,7 @@ const NOSE_POINT = 195;
 const LEFT_EYE = 159; //118
 const RIGHT_EYE = 386;
 const LEFT_CHEEKBONE = 116;
+const RIGHT_CHEEKBONE = 345;//345
 
 //nose
 const LEFT_NOSE = 236; //104 //142
@@ -39,6 +40,10 @@ const RIGHT_EYE_RIGHTSIDE = 263;
 //left cheekbone
 const LEFT_CHEEKBONE_LEFTSIDE = 227;//34
 const LEFT_CHEEKBONE_RIGHTSIDE = 101;//35
+
+//right cheekbone
+const RIGHT_CHEEKBONE_LEFTSIDE = 330;
+const RIGHT_CHEEKBONE_RIGHTSIDE = 447;
 
 // const LEFT_EYE_TOP = 159;
 // const LEFT_EYE_BOTTOM = 143;
@@ -111,6 +116,9 @@ function draw()
     //get left cheekbone location
     let leftCheekboneLocation = latestPrediction.scaledMesh[LEFT_CHEEKBONE];
 
+    //get right cheekbone location
+    let rightCheekboneLocation = latestPrediction.scaledMesh[RIGHT_CHEEKBONE];
+
     //get nose width
     let leftNoseLocation = latestPrediction.scaledMesh[LEFT_NOSE];
     let rightNoseLocation = latestPrediction.scaledMesh[RIGHT_NOSE];
@@ -164,6 +172,15 @@ function draw()
         leftCheekboneLeftLocation[1],
         leftCheekboneRightLocation[0],
         leftCheekboneRightLocation[1]);
+
+    //gets right cheekbone width
+    let rightCheekboneLeftLocation = latestPrediction.scaledMesh[RIGHT_CHEEKBONE_LEFTSIDE];
+    let rightCheekboneRightLocation = latestPrediction.scaledMesh[RIGHT_CHEEKBONE_RIGHTSIDE];
+
+    let rightCheekboneWidth = dist(rightCheekboneLeftLocation[0],
+        rightCheekboneLeftLocation[1],
+        rightCheekboneRightLocation[0],
+        rightCheekboneRightLocation[1]);
 
     // let leftEyeTopLocation = latestPrediction.scaledMesh[LEFT_EYE_TOP];
     // let leftEyeBottomLocation = latestPrediction.scaledMesh[LEFT_EYE_BOTTOM];
@@ -237,6 +254,18 @@ function draw()
     leftCheekboneLocation[1], 
     lGlitterWidth, 
     lGlitterHeight);
+
+    //right cheek glitter
+    let rGlitterWidth = rightCheekboneWidth;
+    let rGlitterHeight = (pGlitterImage.height / pGlitterImage.width) * rGlitterWidth;
+
+    imageMode(CENTER);
+    image
+    (pGlitterImage,
+    rightCheekboneLocation[0], 
+    rightCheekboneLocation[1], 
+    rGlitterWidth, 
+    rGlitterHeight);
 
     //butterfly
     bug.display();
