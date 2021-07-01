@@ -8,18 +8,17 @@ let eyebrowHeight;
 let blushImage;
 let eyelashImage;
 let pGlitterImage;
-// let leftEyeLocation;
 
 //main points
 const NOSE_POINT = 195;
-const LEFT_EYE = 159; //118
+const LEFT_EYE = 159;
 const RIGHT_EYE = 386;
 const LEFT_CHEEKBONE = 116;
-const RIGHT_CHEEKBONE = 345;//345
+const RIGHT_CHEEKBONE = 345;
 
 //nose
-const LEFT_NOSE = 236; //104 //142
-const RIGHT_NOSE = 456; //333 //371
+const LEFT_NOSE = 236;
+const RIGHT_NOSE = 456;
 
 //eyebrow
 const LEFT_EYEBROW_BOTTOM = 223;
@@ -38,15 +37,12 @@ const RIGHT_EYE_LEFTSIDE = 362;
 const RIGHT_EYE_RIGHTSIDE = 263;
 
 //left cheekbone
-const LEFT_CHEEKBONE_LEFTSIDE = 227;//34
-const LEFT_CHEEKBONE_RIGHTSIDE = 101;//35
+const LEFT_CHEEKBONE_LEFTSIDE = 227;
+const LEFT_CHEEKBONE_RIGHTSIDE = 101;
 
 //right cheekbone
 const RIGHT_CHEEKBONE_LEFTSIDE = 330;
 const RIGHT_CHEEKBONE_RIGHTSIDE = 447;
-
-// const LEFT_EYE_TOP = 159;
-// const LEFT_EYE_BOTTOM = 143;
 
 
 //p5 function
@@ -77,14 +73,7 @@ function setup()
     //ml5 function
     facemesh.on("predict", (results) =>
     {
-        //results is an Array
-        //we care about the first object only
-        //results[0]
-        // console.log(results[0]);
         latestPrediction = results[0];
-        //get nose location
-        // noseLocation = latestPrediction.scaledMesh[NOSE_POINT];//line causes problems
-        // leftEyeLocation = latestPrediction.scaledMesh[LEFT_EYE];
     });
 
     bug = new Butterfly();
@@ -95,9 +84,6 @@ function setup()
 //p5 function
 function draw()
 {
-    // if(modelIsLoading)
-    //show a loading screen
-
     //draw webcam video
     imageMode(CORNER);
     image(video, 0, 0, width, height);
@@ -181,17 +167,6 @@ function draw()
         rightCheekboneLeftLocation[1],
         rightCheekboneRightLocation[0],
         rightCheekboneRightLocation[1]);
-
-    // let leftEyeTopLocation = latestPrediction.scaledMesh[LEFT_EYE_TOP];
-    // let leftEyeBottomLocation = latestPrediction.scaledMesh[LEFT_EYE_BOTTOM];
-
-    // let leftEyeHeight = dist(leftEyeTopLocation[0], 
-    //     leftEyeTopLocation[1],
-    //     leftEyeBottomLocation[0],
-    //     leftEyeBottomLocation[1]);
-
-    // let pupilWidth = leftEyeWidth;
-    // let pupilHeight = leftEyeHeight / 2;
     
     //left eyelash
     let lLashWidth = leftEyeWidth * 2;
@@ -211,7 +186,6 @@ function draw()
     
     push();
     imageMode(CENTER);
-    // scale(-1.0, 1.0);
     image
     (eyelashImage,
     rightEyeLocation[0], 
@@ -269,47 +243,11 @@ function draw()
 
     //butterfly
     bug.display();
-
-
-
-    // fill('rgba(100%,20%,70%,0.5)');
-    // stroke('rgba(100%,20%,70%,0.5)');
-    // ellipse(leftEyeLocation[0] + 10, 
-    //     leftEyeLocation[1] + 10, 
-    //     pupilWidth, 
-    //     pupilHeight);
-
-    // image
-    // (butterflyImage,
-    // noseLocation[0] - 50, 
-    // noseLocation[1] - 50, 
-    // 100, 
-    // 100);
-    
-
-
-    // line(leftNoseLocation[0], 
-    //     leftNoseLocation[1], 
-    //     rightNoseLocation[0], 
-    //     rightNoseLocation[1]);
 }
 
 
-//to move butterfly
 
 let bug; // Declare object
-// function setup() {
-//   createCanvas(710, 400);
-//   // Create object
-//   bug = new Butterfly();
-// }
-// function draw() {
-//   if (mouseIsPressed){
-//     bug.move();
-//   }
-//   bug.display();
-// }
-
 
 // Butterfly class
 class Butterfly 
@@ -321,6 +259,7 @@ class Butterfly
     this.diameter = random(10, 30);
     this.speed = 1;
   }
+  //to move butterfly
   move() 
   {
     this.x += random(0, 4);
@@ -337,7 +276,6 @@ class Butterfly
     this.y, 
     butterflyWidth, 
     butterflyHeight);
-    // ellipse(this.x, this.y, this.diameter, this.diameter);
   }
 
   updateNoseLocation()
