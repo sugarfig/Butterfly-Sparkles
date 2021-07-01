@@ -4,6 +4,8 @@ let modelIsLoading = true;
 let butterflyImage;
 let noseWidth;
 let noseLocation;
+let eyebrowHeight;
+let blushImage;
 
 //main points
 const NOSE_POINT = 195;
@@ -13,8 +15,13 @@ const LEFT_EYE = 118; //159
 const LEFT_NOSE = 236; //104 //142
 const RIGHT_NOSE = 456; //333 //371
 
+//eyebrow
+const LEFT_EYEBROW_BOTTOM = 223;
+const LEFT_EYEBROW_TOP = 52;
+
 //blush
-// const CHEEKS 
+const LEFT_CHEEK = 147;
+const RIGHT_CHEEK = 176;
 
 //left eye
 // const LEFT_EYE_LEFTSIDE = 33;
@@ -27,6 +34,7 @@ const RIGHT_NOSE = 456; //333 //371
 function preload()
 {
     butterflyImage = loadImage("assets/butterfly.gif");
+    blushImage = loadImage("assets/Blush.webp");
 }
 
 //p5 function
@@ -88,6 +96,24 @@ function draw()
         rightNoseLocation[0], 
         rightNoseLocation[1]);
 
+    let topEyebrowLocation = latestPrediction.scaledMesh[LEFT_EYEBROW_TOP];
+    let bottomEyebrowLocation = latestPrediction.scaledMesh[LEFT_EYEBROW_BOTTOM];
+
+    eyebrowHeight = dist(topEyebrowLocation[0], 
+        topEyebrowLocation[1], 
+        bottomEyebrowLocation[0],
+        bottomEyebrowLocation[1]);
+
+    let leftCheekLocation = latestPrediction.scaledMesh[LEFT_CHEEK];
+    let rightCheekLocation = latestPrediction.scaledMesh[RIGHT_CHEEK];
+
+    let cheekWidth = dist(leftCheekLocation[0],
+        leftCheekLocation[1],
+        rightCheekLocation[0],
+        rightCheekLocation[1]);
+    
+
+
     // let leftEyeLeftLocation = latestPrediction.scaledMesh[LEFT_EYE_LEFTSIDE];
     // let leftEyeRightLocation = latestPrediction.scaledMesh[LEFT_EYE_RIGHTSIDE];
 
@@ -109,7 +135,7 @@ function draw()
 
 
 
-    if(mouseIsPressed) //eyebrow raise
+    if(eyebrowHeight > 10) //eyebrow raise
     {
         bug.move();
     }
@@ -117,9 +143,20 @@ function draw()
     {
         bug.updateNoseLocation();
     }
-    
+
+    let blushWidth = cheekWidth * 2;
+    let blushHeight = (blushImage.height / blushImage.width) * blushWidth;
+    imageMode(CENTER);
+    image
+    (blushImage,
+    noseLocation[0], 
+    noseLocation[1], 
+    blushWidth, 
+    blushHeight);
+
     bug.display();
-    
+
+
 
     // fill('rgba(100%,20%,70%,0.5)');
     // stroke('rgba(100%,20%,70%,0.5)');
@@ -172,7 +209,7 @@ class Butterfly
   }
   move() 
   {
-    this.x -= 1;
+    this.x += random(0, 4);
     this.y -= random(0, 4);
   }
   display() 
