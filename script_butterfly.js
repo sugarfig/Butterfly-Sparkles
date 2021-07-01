@@ -81,6 +81,11 @@ function setup()
     video.hide();
 }
 
+function getLatestPrediction(point)
+{
+    return latestPrediction.scaledMesh[point];
+}
+
 //p5 function
 function draw()
 {
@@ -90,24 +95,43 @@ function draw()
     //------------------------------------
     if(latestPrediction == null) return;//don't draw anything else
 
+    // //get nose location
+    // noseLocation = latestPrediction.scaledMesh[NOSE_POINT];
+
+    // //get left eye location
+    // let leftEyeLocation = latestPrediction.scaledMesh[LEFT_EYE];
+
+    // //get right eye location
+    // let rightEyeLocation = latestPrediction.scaledMesh[RIGHT_EYE];
+
+    // //get left cheekbone location
+    // let leftCheekboneLocation = latestPrediction.scaledMesh[LEFT_CHEEKBONE];
+
+    // //get right cheekbone location
+    // let rightCheekboneLocation = latestPrediction.scaledMesh[RIGHT_CHEEKBONE];
+
+    // //get nose width
+    // let leftNoseLocation = latestPrediction.scaledMesh[LEFT_NOSE];
+    // let rightNoseLocation = latestPrediction.scaledMesh[RIGHT_NOSE];
+
     //get nose location
-    noseLocation = latestPrediction.scaledMesh[NOSE_POINT];
+    noseLocation = getLatestPrediction(NOSE_POINT);
 
     //get left eye location
-    let leftEyeLocation = latestPrediction.scaledMesh[LEFT_EYE];
+    let leftEyeLocation = getLatestPrediction(LEFT_EYE);
 
     //get right eye location
-    let rightEyeLocation = latestPrediction.scaledMesh[RIGHT_EYE];
+    let rightEyeLocation = getLatestPrediction(RIGHT_EYE);
 
     //get left cheekbone location
-    let leftCheekboneLocation = latestPrediction.scaledMesh[LEFT_CHEEKBONE];
+    let leftCheekboneLocation = getLatestPrediction(LEFT_CHEEKBONE);
 
     //get right cheekbone location
-    let rightCheekboneLocation = latestPrediction.scaledMesh[RIGHT_CHEEKBONE];
+    let rightCheekboneLocation = getLatestPrediction(RIGHT_CHEEKBONE);
 
     //get nose width
-    let leftNoseLocation = latestPrediction.scaledMesh[LEFT_NOSE];
-    let rightNoseLocation = latestPrediction.scaledMesh[RIGHT_NOSE];
+    let leftNoseLocation = getLatestPrediction(LEFT_NOSE);
+    let rightNoseLocation = getLatestPrediction(RIGHT_NOSE);
 
     noseWidth = dist(leftNoseLocation[0], 
         leftNoseLocation[1], 
@@ -115,8 +139,8 @@ function draw()
         rightNoseLocation[1]);
 
     //get eyebrow height
-    let topEyebrowLocation = latestPrediction.scaledMesh[LEFT_EYEBROW_TOP];
-    let bottomEyebrowLocation = latestPrediction.scaledMesh[LEFT_EYEBROW_BOTTOM];
+    let topEyebrowLocation = getLatestPrediction(LEFT_EYEBROW_TOP);
+    let bottomEyebrowLocation = getLatestPrediction(LEFT_EYEBROW_BOTTOM);
 
     eyebrowHeight = dist(topEyebrowLocation[0], 
         topEyebrowLocation[1], 
@@ -124,8 +148,8 @@ function draw()
         bottomEyebrowLocation[1]);
     
     //get cheeks width
-    let leftCheekLocation = latestPrediction.scaledMesh[LEFT_CHEEK];
-    let rightCheekLocation = latestPrediction.scaledMesh[RIGHT_CHEEK];
+    let leftCheekLocation = getLatestPrediction(LEFT_CHEEK);
+    let rightCheekLocation = getLatestPrediction(RIGHT_CHEEK);
 
     let cheekWidth = dist(leftCheekLocation[0],
         leftCheekLocation[1],
@@ -133,8 +157,8 @@ function draw()
         rightCheekLocation[1]);
     
     //gets left eye width
-    let leftEyeLeftLocation = latestPrediction.scaledMesh[LEFT_EYE_LEFTSIDE];
-    let leftEyeRightLocation = latestPrediction.scaledMesh[LEFT_EYE_RIGHTSIDE];
+    let leftEyeLeftLocation = getLatestPrediction(LEFT_EYE_LEFTSIDE);
+    let leftEyeRightLocation = getLatestPrediction(LEFT_EYE_RIGHTSIDE);
 
     let leftEyeWidth = dist(leftEyeLeftLocation[0], 
         leftEyeLeftLocation[1], 
@@ -142,8 +166,8 @@ function draw()
         leftEyeRightLocation[1]);
 
     //gets right eye width
-    let rightEyeLeftLocation = latestPrediction.scaledMesh[RIGHT_EYE_LEFTSIDE];
-    let rightEyeRightLocation = latestPrediction.scaledMesh[RIGHT_EYE_RIGHTSIDE];
+    let rightEyeLeftLocation = getLatestPrediction(RIGHT_EYE_LEFTSIDE);
+    let rightEyeRightLocation = getLatestPrediction(RIGHT_EYE_RIGHTSIDE);
 
     let rightEyeWidth = dist(rightEyeLeftLocation[0],
         rightEyeLeftLocation[1],
@@ -151,8 +175,8 @@ function draw()
         rightEyeRightLocation[1]);
     
     //gets left cheekbone width
-    let leftCheekboneLeftLocation = latestPrediction.scaledMesh[LEFT_CHEEKBONE_LEFTSIDE];
-    let leftCheekboneRightLocation = latestPrediction.scaledMesh[LEFT_CHEEKBONE_RIGHTSIDE];
+    let leftCheekboneLeftLocation = getLatestPrediction(LEFT_CHEEKBONE_LEFTSIDE);
+    let leftCheekboneRightLocation = getLatestPrediction(LEFT_CHEEKBONE_RIGHTSIDE);
 
     let leftCheekboneWidth = dist(leftCheekboneLeftLocation[0],
         leftCheekboneLeftLocation[1],
@@ -160,8 +184,8 @@ function draw()
         leftCheekboneRightLocation[1]);
 
     //gets right cheekbone width
-    let rightCheekboneLeftLocation = latestPrediction.scaledMesh[RIGHT_CHEEKBONE_LEFTSIDE];
-    let rightCheekboneRightLocation = latestPrediction.scaledMesh[RIGHT_CHEEKBONE_RIGHTSIDE];
+    let rightCheekboneLeftLocation = getLatestPrediction(RIGHT_CHEEKBONE_LEFTSIDE);
+    let rightCheekboneRightLocation = getLatestPrediction(RIGHT_CHEEKBONE_RIGHTSIDE);
 
     let rightCheekboneWidth = dist(rightCheekboneLeftLocation[0],
         rightCheekboneLeftLocation[1],
@@ -184,7 +208,6 @@ function draw()
     let rLashWidth = rightEyeWidth * 2;
     let rLashHeight = (eyelashImage.height / eyelashImage.width) * rLashWidth;
     
-    push();
     imageMode(CENTER);
     image
     (eyelashImage,
@@ -192,9 +215,6 @@ function draw()
     rightEyeLocation[1], 
     rLashWidth, 
     rLashHeight);
-    pop();
-
-    // scale(1, 1);
 
     //butterfly
     if(eyebrowHeight > 10) //eyebrow raise
