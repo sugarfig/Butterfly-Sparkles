@@ -7,13 +7,14 @@ let noseLocation;
 let eyebrowHeight;
 let blushImage;
 let eyelashImage;
-// let pGlitterImage;
+let pGlitterImage;
 // let leftEyeLocation;
 
 //main points
 const NOSE_POINT = 195;
 const LEFT_EYE = 159; //118
 const RIGHT_EYE = 386;
+const LEFT_CHEEKBONE = 116;
 
 //nose
 const LEFT_NOSE = 236; //104 //142
@@ -35,6 +36,10 @@ const LEFT_EYE_RIGHTSIDE = 133;
 const RIGHT_EYE_LEFTSIDE = 362;
 const RIGHT_EYE_RIGHTSIDE = 263;
 
+//left cheekbone
+const LEFT_CHEEKBONE_LEFTSIDE = 227;//34
+const LEFT_CHEEKBONE_RIGHTSIDE = 101;//35
+
 // const LEFT_EYE_TOP = 159;
 // const LEFT_EYE_BOTTOM = 143;
 
@@ -45,6 +50,7 @@ function preload()
     butterflyImage = loadImage("assets/butterfly.gif");
     blushImage = loadImage("assets/Blush.webp");
     eyelashImage = loadImage("assets/eyeliner1.png");
+    pGlitterImage = loadImage("assets/pinkGlitter.gif");
 }
 
 //p5 function
@@ -101,8 +107,9 @@ function draw()
 
     //get right eye location
     let rightEyeLocation = latestPrediction.scaledMesh[RIGHT_EYE];
-    
-    console.log(noseLocation);
+
+    //get left cheekbone location
+    let leftCheekboneLocation = latestPrediction.scaledMesh[LEFT_CHEEKBONE];
 
     //get nose width
     let leftNoseLocation = latestPrediction.scaledMesh[LEFT_NOSE];
@@ -148,6 +155,15 @@ function draw()
         rightEyeLeftLocation[1],
         rightEyeRightLocation[0],
         rightEyeRightLocation[1]);
+    
+    //gets left cheekbone width
+    let leftCheekboneLeftLocation = latestPrediction.scaledMesh[LEFT_CHEEKBONE_LEFTSIDE];
+    let leftCheekboneRightLocation = latestPrediction.scaledMesh[LEFT_CHEEKBONE_RIGHTSIDE];
+
+    let leftCheekboneWidth = dist(leftCheekboneLeftLocation[0],
+        leftCheekboneLeftLocation[1],
+        leftCheekboneRightLocation[0],
+        leftCheekboneRightLocation[1]);
 
     // let leftEyeTopLocation = latestPrediction.scaledMesh[LEFT_EYE_TOP];
     // let leftEyeBottomLocation = latestPrediction.scaledMesh[LEFT_EYE_BOTTOM];
@@ -188,6 +204,8 @@ function draw()
     pop();
 
     // scale(1, 1);
+
+    //butterfly
     if(eyebrowHeight > 10) //eyebrow raise
     {
         bug.move();
@@ -197,6 +215,7 @@ function draw()
         bug.updateNoseLocation();
     }
 
+    //blush
     let blushWidth = cheekWidth * 2;
     let blushHeight = (blushImage.height / blushImage.width) * blushWidth;
     imageMode(CENTER);
@@ -207,6 +226,19 @@ function draw()
     blushWidth, 
     blushHeight);
 
+    //left cheek glitter
+    let lGlitterWidth = leftCheekboneWidth;
+    let lGlitterHeight = (pGlitterImage.height / pGlitterImage.width) * lGlitterWidth;
+
+    imageMode(CENTER);
+    image
+    (pGlitterImage,
+    leftCheekboneLocation[0], 
+    leftCheekboneLocation[1], 
+    lGlitterWidth, 
+    lGlitterHeight);
+
+    //butterfly
     bug.display();
 
 
