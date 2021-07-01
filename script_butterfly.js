@@ -50,7 +50,7 @@ function preload()
 {
     butterflyImage = loadImage("assets/butterfly.gif");
     blushImage = loadImage("assets/Blush.webp");
-    eyelashImage = loadImage("assets/eyeliner1.png");
+    eyelashImage = loadImage("assets/eyeliner.png");
     pGlitterImage = loadImage("assets/pinkGlitter.gif");
 }
 
