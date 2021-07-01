@@ -7,6 +7,7 @@ let noseLocation;
 let eyebrowHeight;
 let blushImage;
 let eyelashImage;
+// let pGlitterImage;
 // let leftEyeLocation;
 
 //main points
@@ -139,6 +140,15 @@ function draw()
         leftEyeRightLocation[0], 
         leftEyeRightLocation[1]);
 
+    //gets right eye width
+    let rightEyeLeftLocation = latestPrediction.scaledMesh[RIGHT_EYE_LEFTSIDE];
+    let rightEyeRightLocation = latestPrediction.scaledMesh[RIGHT_EYE_RIGHTSIDE];
+
+    let rightEyeWidth = dist(rightEyeLeftLocation[0],
+        rightEyeLeftLocation[1],
+        rightEyeRightLocation[0],
+        rightEyeRightLocation[1]);
+
     // let leftEyeTopLocation = latestPrediction.scaledMesh[LEFT_EYE_TOP];
     // let leftEyeBottomLocation = latestPrediction.scaledMesh[LEFT_EYE_BOTTOM];
 
@@ -150,18 +160,34 @@ function draw()
     // let pupilWidth = leftEyeWidth;
     // let pupilHeight = leftEyeHeight / 2;
     
-    let lashWidth = leftEyeWidth * 2;
-    let lashHeight = (eyelashImage.height / eyelashImage.width) * lashWidth;
+    //left eyelash
+    let lLashWidth = leftEyeWidth * 2;
+    let lLashHeight = (eyelashImage.height / eyelashImage.width) * lLashWidth;
 
     imageMode(CENTER);
     image
     (eyelashImage,
     leftEyeLocation[0], 
     leftEyeLocation[1], 
-    lashWidth, 
-    lashHeight);
+    lLashWidth, 
+    lLashHeight);
+    
+    //right eyelash
+    let rLashWidth = rightEyeWidth * 2;
+    let rLashHeight = (eyelashImage.height / eyelashImage.width) * rLashWidth;
+    
+    push();
+    imageMode(CENTER);
+    // scale(-1.0, 1.0);
+    image
+    (eyelashImage,
+    rightEyeLocation[0], 
+    rightEyeLocation[1], 
+    rLashWidth, 
+    rLashHeight);
+    pop();
 
-
+    // scale(1, 1);
     if(eyebrowHeight > 10) //eyebrow raise
     {
         bug.move();
