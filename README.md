@@ -11,6 +11,8 @@ This creates a lens that contains some sparkles around the cheeks, as well as a 
 Run code locally using `http-server` or the `VSCode Go Live` option.
 
 ## Link + Instructions
+https://sugarfig.github.io/Butterfly-Sparkles/
+
 1. Make sure face is detected and there is good lighting.
 2. Once face is detected, raise eyebrows to watch butterfly flutter away.
 
